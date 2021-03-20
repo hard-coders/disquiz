@@ -3,14 +3,10 @@ from functools import lru_cache
 from fastapi import FastAPI
 
 from app.api import v1
-from app.config import Settings
+from app.models import Base, engine
 
 app = FastAPI()
-
-
-@lru_cache()
-def get_settings():
-    return Settings()
+Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")

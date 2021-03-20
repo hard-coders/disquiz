@@ -1,9 +1,11 @@
-from sqlalchemy import Boolean, Column, Integer, String, DateTime, func
+from datetime import datetime
+
+from sqlalchemy import Boolean, Column, Integer, String, DateTime
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from app.main import get_settings
+from app.config import get_settings
 
 settings = get_settings()
 
@@ -12,14 +14,13 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 Base = declarative_base()
-Base.metadata.create_all(bind=engine)
 
 
 class BaseMixin:
     id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime, nullable=False, default=func.utc_timestamp())
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(
-        DateTime, nullable=False, default=func.utc_timestamp(), onupdate=func.utc_timestamp()
+        DateTime, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow()
     )
 
 
