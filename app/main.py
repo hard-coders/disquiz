@@ -1,11 +1,10 @@
-from functools import lru_cache
-
 from fastapi import FastAPI
 
 from app.api import v1
 from app.models import Base, engine
+from app.errors.handlers import exception_handler
 
-app = FastAPI()
+app = FastAPI(exception_handlers=exception_handler)
 Base.metadata.create_all(bind=engine)
 
 
