@@ -1,10 +1,22 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
-class CreateUser(BaseModel):
-    email: str
+class UserBase(BaseModel):
+    email: EmailStr
+
+
+class UserCreate(UserBase):
     username: str
     password: str
+
+
+class User(UserBase):
+    id: int
+    username: str
+    is_active: bool
+
+    class Config:
+        orm_mode = True
 
 
 # --------------------------------------------------------------------------------------
@@ -12,16 +24,6 @@ class CreateUser(BaseModel):
 # --------------------------------------------------------------------------------------
 class ResponseId(BaseModel):
     id: int
-
-    class Config:
-        orm_mode = True
-
-
-class ResponseUser(BaseModel):
-    email: str
-    username: str
-    hashed_password: str
-    is_active: bool
 
     class Config:
         orm_mode = True
