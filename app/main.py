@@ -5,7 +5,18 @@ from app.models import Base, engine
 from app.errors.handlers import exception_handler
 
 app = FastAPI(exception_handlers=exception_handler)
+
 Base.metadata.create_all(bind=engine)
+
+
+@app.on_event("startup")
+async def startup_event():
+    ...
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    ...
 
 
 @app.get("/")

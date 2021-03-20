@@ -31,3 +31,8 @@ class User(Base, BaseMixin):
     username = Column(String)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
+
+    def __init__(self, email: str, username: str, hashed_password: str):
+        self.email = email
+        self.username = username
+        self.hashed_password = hashed_password
